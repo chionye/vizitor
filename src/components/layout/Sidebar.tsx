@@ -26,19 +26,21 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* User Info */}
-      <div className="p-4 border-b border-gray-200">
-        <div className="flex items-center">
-          <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
-            <span className="text-primary-600 font-semibold">
-              {user?.fullName.charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <div className="ml-3">
-            <p className="text-sm font-medium text-gray-900">{user?.fullName}</p>
-            <p className="text-xs text-gray-500">{user?.role}</p>
+      {user && (
+        <div className="p-4 border-b border-gray-200">
+          <div className="flex items-center">
+            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
+              <span className="text-primary-600 font-semibold">
+                {user.fullName?.charAt(0).toUpperCase() || 'U'}
+              </span>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-900">{user.fullName}</p>
+              <p className="text-xs text-gray-500">{user.role}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
