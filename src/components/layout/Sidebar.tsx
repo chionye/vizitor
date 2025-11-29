@@ -3,7 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Users, UserCheck, UserCog, LogOut } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { user, logout } = useAuthStore();
 
   const navigation = [
@@ -17,8 +22,17 @@ export const Sidebar: React.FC = () => {
     window.location.href = '/login';
   };
 
+  const handleNavClick = () => {
+    // Close sidebar on mobile when navigating
+    onClose();
+  };
+
   return (
-    <div className="flex flex-col h-screen w-64 bg-white border-r border-gray-200">
+    <div
+      className={`flex flex-col h-screen w-64 bg-white border-r border-gray-200 fixed md:static z-50 transition-transform duration-300 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+      }`}
+    >
       {/* Logo/Brand */}
       <div className="flex items-center justify-center h-16 border-b border-gray-200">
         <UserCog className="text-primary-600 mr-2" size={28} />
@@ -47,6 +61,7 @@ export const Sidebar: React.FC = () => {
             key={item.name}
             to={item.href}
             end={item.href === '/'}
+            onClick={handleNavClick}
             className={({ isActive }) =>
               `flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                 isActive
